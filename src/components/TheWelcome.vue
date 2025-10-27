@@ -46,4 +46,25 @@ const items = [
 
     </tbody>
   </table>
+
 </template>
+
+<style>
+th {
+  padding: 10px;
+}
+
+td {
+  padding: 10px;
+  text-align: center;
+
+}
+
+td,th {
+  border: 1px solid darkgrey;
+}
+
+
+
+
+</style>
