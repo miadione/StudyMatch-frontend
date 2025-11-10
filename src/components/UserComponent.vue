@@ -46,9 +46,11 @@ const users = [
 <style scoped>
 .main-container {
   display: flex;
+  flex-direction: row;
   width: 100%;
   align-items: center;
   justify-content: center;
+
 }
 
 .card {
@@ -59,7 +61,7 @@ const users = [
   background: #f1f0f0;
   align-items: center;
   gap: 20px;
-  padding: 3rem 0rem 0rem 0rem;
+  padding-top: 3rem;
   border-radius: 25px;
   margin: 20px;
 }
@@ -69,7 +71,7 @@ const users = [
   width: 180px;
   height: 180px;
   border-radius: 50%;
-  border: 5px solid #3c9d49;
+  border: 5px solid rgba(35, 106, 163, 0.55);
 }
 .details {
   padding: 1rem;
@@ -78,7 +80,7 @@ const users = [
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #829ba4;
+  background: rgba(14, 41, 112, 0.63);
   border-radius: 25px;
 }
 .contact {
