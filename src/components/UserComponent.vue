@@ -1,30 +1,39 @@
 <script setup lang="ts">
-const users = [
-  {
-    uid : 1,
-    vorname: "Mia",
-    nachname: "Mitrovic",
-    email: "mia@mitrovic.de",
-    profile: "/src/assets/female_profile.jpg"
-  },
 
-  {
-    uid: 2,
-    vorname: "Laszlo",
-    nachname: "Imanuel",
-    email: "laszlo@imanuel.de",
-    profile: "/src/assets/male_profile.jpg"
+import { ref, onMounted } from "vue";
+import axios from "axios";
+
+// reactive state (refs)
+const users = ref([]);
+const loading = ref(false);
+const error = ref("");
+
+// Daten abrufen
+const loadUsers = async () => {
+  loading.value = true;
+  try {
+    const res = await axios.get(
+        "https://studymatch-xitu.onrender.com/api/user"
+    );
+    users.value = res.data;
+  } catch (err) {
+    console.error(err);
+    error.value = "Konnte Benutzer nicht laden.";
+  } finally {
+    loading.value = false;
   }
-]
+};
 
+// wird ausgeführt, wenn Komponente geladen wird
+onMounted(loadUsers);
 </script>
 
 <template>
   <section class="main-container">
-    <div v-for="user in users" :key="user.uid" class="card">
+    <div v-for="user in users" :key="user.id" class="card">
       <img :src=user.profile class="profile-pic">
       <div class="details">
-        <h1 class="name"> {{user.vorname}} {{user.nachname}}</h1>
+        <h1 class="name"> {{user.vorname}}</h1>
         <div class="contact">
           <div class="bez">
             <p>Contact</p>
