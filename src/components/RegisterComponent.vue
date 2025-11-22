@@ -17,7 +17,7 @@ async function saveUser () {
   errorMessage.value = ''
   try {
 
-    const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL // 'http://localhost:8080' in dev mode
+    const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL
     console.log('BaseUrl', baseUrl)
     const endpoint = baseUrl + '/api/auth/register'
     const data: User = {

@@ -3,7 +3,7 @@ import RegisterView from '../views/RegisterView.vue'
 import UserView from "@/views/UserView.vue";
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.VITE_BACKEND_BASE_URL),
   routes: [
     {
       path: '/api/auth/register',
