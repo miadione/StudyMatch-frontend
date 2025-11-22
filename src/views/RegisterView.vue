@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import UserComponent from '../components/UserComponent.vue'
+import RegisterComponent from '../components/RegisterComponent.vue'
 </script>
 
 <template>
   <main>
-    <UserComponent></UserComponent>
+    <RegisterComponent></RegisterComponent>
   </main>
 </template>

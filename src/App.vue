@@ -4,7 +4,6 @@
 <template>
   <body>
     <main>
-      <h1>Overview User</h1>
       <RouterView />
     </main>
   </body>
