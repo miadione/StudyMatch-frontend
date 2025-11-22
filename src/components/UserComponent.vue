@@ -17,7 +17,7 @@ async function loadUsers() {
     const response: AxiosResponse = await axios.get(endpoint);
     users.value = response.data.map((user: User) => ({
       ...user,
-      img: user.img || 'https://via.placeholder.com/180?text=No+Image'  // Besserer Placeholder
+      img: user.img
     }));
     console.log('Users loaded with placeholders:', users.value);
   } catch (error) {
@@ -148,7 +148,7 @@ onUnmounted(() => {
     </div>
     <div
         v-for="(user, index) in users"
-        :key="user.id"
+        :key="user.username"
         class="card"
         :style="getCardStyle(index)"
         @touchstart="handleTouchStart($event, index)"
