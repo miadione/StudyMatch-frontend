@@ -18,6 +18,7 @@ async function saveUser () {
   try {
 
     const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL // 'http://localhost:8080' in dev mode
+    console.log('BaseUrl', baseUrl)
     const endpoint = baseUrl + '/api/auth/register'
     const data: User = {
       vorname: vorname.value,
