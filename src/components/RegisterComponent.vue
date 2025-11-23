@@ -8,7 +8,7 @@ import type {AxiosResponse} from 'axios'
 const vorname = ref('')
 const username = ref('')
 const password = ref('')
-const role = ref('')
+const role = ref('USER')
 const successMessage = ref('')
 const errorMessage = ref('')
 
@@ -55,11 +55,6 @@ async function saveUser () {
     <input v-model="vorname" placeholder="Name" type="text">
     <input v-model="username" placeholder="Email" type="text">
     <input v-model="password" placeholder="Passwort" type="password" @keyup.enter="saveUser()">
-    <select v-model="role">
-      <option value="">Rolle wählen</option>
-      <option value="USER">USER</option>
-      <option value="ADMIN">ADMIN</option>
-    </select>
     <button type="button" @click="saveUser()">Save</button>
   </div>
 
