@@ -13,7 +13,7 @@ const startPos = ref({ x: 0, y: 0 });
 async function loadUsers() {
   try {
     const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
-    const endpoint = baseUrl + '/users';
+    const endpoint = baseUrl + 'api/users';
     const response: AxiosResponse = await axios.get(endpoint);
     users.value = response.data.map((user: User) => ({
       ...user,

@@ -6,12 +6,12 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/api/auth/register',
+      path: '/register',
       name: 'register',
       component: RegisterView,
     },
     {
-        path:'api/users',
+        path:'/users',
         name: 'users',
         component:UserView,
     },
