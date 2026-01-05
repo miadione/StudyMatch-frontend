@@ -6,6 +6,8 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
+    base: '/',
+    assetsInclude: ['**/*.jpg', '**/*.png', '**/*.svg'],
   plugins: [
     vue(),
     vueDevTools(),
@@ -15,4 +17,12 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  server: {
+    host: '0.0.0.0',
+    port: 5173,
+    allowedHosts: [
+      'localhost',
+      '.ngrok-free.dev'  // Erlaubt alle ngrok Subdomains
+    ]
+  }
 })

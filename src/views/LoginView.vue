@@ -3,47 +3,52 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import BaseInput from '@/components/ui/BaseInput.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
-import { useAuth } from '@/composables/useAuth'
+import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
+import {useAuth} from "@/composables/useAuth.ts";
 
 const router = useRouter()
-const { login, register, loading, error } = useAuth()
+const { login, loading, error } = useAuth()
 
 const username = ref('')
 const password = ref('')
+const showSuccess = ref(false)
 
 async function handleSubmit(): Promise<void> {
-  const success = await register({
+  const success = await login({
     username: username.value,
     password: password.value
   })
 
   if (success) {
-    const loginSuccess = await login({
-      username: username.value,
-      password: password.value
-    })
+    showSuccess.value = true
 
-    if (loginSuccess) {
-      void router.push('/onboarding')
-    }
+    // Kurz warten, dann weiterleiten
+    setTimeout(() => {
+      router.push('/users')
+    }, 1500)
   }
 }
-
 </script>
-
 <template>
-  <div class="register-view">
+  <div class="login-view">
     <img src="@/assets/studymatch_logo.svg" width="300" height="auto">
-    <div class="register-card">
-      <h1 class="title">Konto erstellen</h1>
+    <div class="login-card">
+      <h1 class="title">Willkommen zurück</h1>
 
-      <form @submit.prevent="handleSubmit" class="register-form">
+      <!-- Success State -->
+      <div v-if="showSuccess" class="success-state">
+        <LoadingSpinner :is-success="true" />
+        <p>Erfolgreich angemeldet!</p>
+      </div>
+
+      <!-- Login Form -->
+      <form v-else @submit.prevent="handleSubmit" class="login-form">
         <BaseInput
             class="input-field"
             v-model="username"
             label="E-Mail"
             type="email"
-            placeholder="max@beispiel.de"
+            placeholder="deine@email.de"
             required
         />
 
@@ -52,21 +57,22 @@ async function handleSubmit(): Promise<void> {
             v-model="password"
             label="Passwort"
             type="password"
-            placeholder="Mindestens 8 Zeichen"
+            placeholder="••••••••"
             required
         />
+
         <p v-if="error" class="error-message">{{ error }}</p>
 
         <BaseButton
             type="submit"
             :loading="loading"
         >
-          Registrieren
+          Anmelden
         </BaseButton>
 
-        <p class="login-link">
-          Bereits ein Konto?
-          <router-link to="/login">Anmelden</router-link>
+        <p class="register-link">
+          Noch kein Konto?
+          <router-link to="/register">Registrieren</router-link>
         </p>
       </form>
     </div>
@@ -74,7 +80,7 @@ async function handleSubmit(): Promise<void> {
 </template>
 
 <style scoped>
-.register-view {
+.login-view {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -82,18 +88,18 @@ async function handleSubmit(): Promise<void> {
   justify-content: center;
   padding: 20px;
   background: var(--gradient-primary);
-
 }
 
-.register-card {
+.login-card {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
   max-width: 400px;
   background: white;
   border-radius: 24px;
-  padding: 40px;
+  padding: 30px;
   margin-top: 50px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
@@ -104,16 +110,25 @@ async function handleSubmit(): Promise<void> {
   font-size: 1.5rem;
 }
 
-.register-form {
+.success-state {
   display: flex;
-  width: 100%;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
+  padding: 40px 0;
 }
 
-.input-field{
+.success-state p {
+  color: #105020;
+  font-weight: 600;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
+  gap: 20px;
 }
 
 .error-message {
@@ -123,20 +138,25 @@ async function handleSubmit(): Promise<void> {
   text-align: center;
 }
 
-.login-link {
+.register-link {
   text-align: center;
   color: #666;
   font-size: 0.875rem;
   margin: 0;
 }
 
-.login-link a {
+.register-link a {
   color: #007bff;
   text-decoration: none;
   font-weight: 600;
 }
 
-.login-link a:hover {
+.register-link a:hover {
   text-decoration: underline;
 }
+
+.input-field{
+  width: 100%;
+}
+
 </style>
