@@ -1,5 +1,6 @@
 import axios from 'axios'
 import router from '@/router'
+import { isTokenExpired } from '@/utils/tokenUtils'
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_BACKEND_BASE_URL,
@@ -11,6 +12,20 @@ const api = axios.create({
 api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('token')
+
+        // Login/Register brauchen keinen Token
+        const isAuthEndpoint = config.url?.includes('/auth/')
+
+        if (!isAuthEndpoint && isTokenExpired(token)) {
+            localStorage.removeItem('token')
+            localStorage.removeItem('user')
+
+            if (router.currentRoute.value.path !== '/login') {
+                void router.push('/login')
+            }
+            return Promise.reject(new Error('Token expired'))
+        }
+
         if (token) {
             config.headers.Authorization = `Bearer ${token}`
         }
@@ -31,7 +46,6 @@ api.interceptors.response.use(
             localStorage.removeItem('token')
             localStorage.removeItem('user')
 
-            // Zur Login-Seite weiterleiten (nur wenn nicht schon dort)
             if (router.currentRoute.value.path !== '/login') {
                 void router.push('/login')
             }
