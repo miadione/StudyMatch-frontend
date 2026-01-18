@@ -41,6 +41,10 @@ import BaseButton from '@/components/ui/BaseButton.vue'
         <h3>Direkte Kommunikation</h3>
         <p>Chatte mit deinen Matches</p>
       </div>
+
+      <div class="feature">
+        <img src="@/assets/qr_code_studymatch.svg" width="150px">
+      </div>
     </div>
   </div>
 </template>
